@@ -11,23 +11,25 @@
           <img :src="blog.cover"  alt=""/>
         </div>
         <div class="article-info">
-          <el-link :underline="false" @click="openBlog(blog)" style="font-size: 20px;font-weight: bold;display: flex">{{blog.title}}</el-link>
-          <p>{{blog.abs}}</p>
-          <div class="article-tags">
+          <el-link :underline="false" @click="openBlog(blog)" style="font-size: 20px;font-weight: bold;">{{blog.title}}</el-link>
+          <p style="width: 100%">{{blog.abs}}</p>
+          <div class="article-tags" style="width: 100%">
             <el-tag
               style="margin: 3px"
-              :key="category.id"
-              v-for="category in blog.categories"
+              :key="category"
+              v-for="category in blog.tags.split('/')"
             >
-              {{category.type}}
+              {{category}}
             </el-tag>
           </div>
           <div class="otherInfo">
-            <span><i class="el-icon-time"></i>2020-10-3</span>
+            <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
-            <span><i class="el-icon-view"></i>2000</span>
+            <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
+            <!--
             <span><i class="el-icon-s-comment"></i>2000</span>
             <span style=""><img src="../../assets/icos/fullheart.png">2</span>
+            -->
           </div>
         </div>
       </div>
@@ -40,47 +42,8 @@ export default {
   name: 'BlogList',
   data () {
     return {
-      blogs: [
-        {
-          title: 'SpringBoot到底是个啥?',
-          cover: require('../../assets/images/test.png'),
-          abs: '一文搞懂SSM',
-          categories: [
-            {
-              id: 0,
-              type : 'springboot'
-            },
-            {
-              id: 1,
-              type : 'java'
-            },
-            {
-              id: 2,
-              type : 'web'
-            },
-          ]
-        },
-        {
-          title: 'SpringBoot到底是个啥?',
-          cover: require('../../assets/images/test.png'),
-          abs: '一文搞懂SSM'
-        },
-        {
-          title: 'SpringBoot到底是个啥?',
-          cover: require('../../assets/images/test.png'),
-          abs: '一文搞懂SSM'
-        },
-        {
-          title: 'SpringBoot到底是个啥?',
-          cover: require('../../assets/images/test.png'),
-          abs: '一文搞懂SSM'
-        },
-        {
-          title: 'SpringBoot到底是个啥?',
-          cover: require('../../assets/images/test.png'),
-          abs: '一文搞懂SSM'
-        }
-      ]
+      blogs: []
+
     }
   },
   mounted () {
@@ -88,13 +51,35 @@ export default {
   },
   methods: {
     loadBlogs(){
-
+      if (this.$route.query.tag) {
+        this.$axios.get('/tag/blogs?tag=' + this.$route.query.tag).then(resp => {
+          if (resp && resp.status === 200)
+            this.blogs = resp.data;
+        }).catch(failresp=>{
+          this.$message('请求失败，请稍后重试');
+        })
+      } else if (this.$route.query.keywords) {
+        this.$axios.get('/keywords/blogs?keywords=' + this.$route.query.keywords).then(resp => {
+          if (resp && resp.status === 200)
+            this.blogs = resp.data;
+        }).catch(failresp=>{
+          this.$message('请求失败，请稍后重试');
+        })
+      } else {
+        this.$axios.get('/blogs').then(resp=>{
+          if(resp&&resp.data) {
+            this.blogs = resp.data;
+          }
+        }).catch(failresp=>{
+          this.$message('请求失败，请稍后重试');
+        })
+      }
     },
     openBlog(blog) {
       this.$router.push({
-        path:'/blogview',
+        path:'/index/blogView',
         query: {
-          blog:blog
+          id: blog.id
         }
       })
     }
@@ -117,8 +102,7 @@ export default {
 
   div.article-info {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-left: 20px;
   }
 
@@ -133,6 +117,9 @@ export default {
     height: 140px;
   }
 
+  div.article-cover img:hover{
+    transform: scale(1.1);
+  }
   div.article-tags {
     text-align: left;
   }

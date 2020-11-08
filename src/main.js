@@ -6,9 +6,17 @@ import router from './router'
 import './plugins/element.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import mavonEditor from 'mavor-editor'
+import 'mavon-editor/dist/css/index.css'
 
+const axios = require('axios')
+axios.defaults.baseURL = 'http://localhost:8088/api'
+
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(mavonEditor)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

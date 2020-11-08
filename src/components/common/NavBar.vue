@@ -7,14 +7,14 @@
     </div>
     <div class="nav-search" style="width: 35%;padding-top: 15px;margin:0 30px 15px 30px">
       <el-input
-        @keyup.enter.native="searchClick"
+        @keyup.enter.native="searchClick(keywords)"
         placeholder="输入文章关键词..."
         prefix-icon="el-icon-search"
         size="small"
         style="width: 70%;margin-right: 10px"
         v-model="keywords">
       </el-input>
-      <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
+      <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick(keywords)">搜索</el-button>
     </div>
     <div class="nav-right">
       <el-menu
@@ -43,6 +43,14 @@ export default {
   methods: {
     handleSelect() {
 
+    },
+    searchClick(keywords) {
+      this.$router.push({
+        path: '/index/blogList',
+        query: {
+          keywords: keywords
+        }
+      })
     }
   }
 }

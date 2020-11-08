@@ -11,7 +11,9 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "element-ui": "^2.4.5",
+    "mavon-editor": "^2.9.0",
     "mavor-editor": "^2.9.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"

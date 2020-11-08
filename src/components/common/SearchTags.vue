@@ -15,6 +15,7 @@
             plain
             v-for="(tag,i) in tags"
             :key="i"
+            @click="loadBlogs(tag)"
             style="margin-top: 10px"
           >{{tag}}</el-button>
         </div>
@@ -32,6 +33,16 @@ export default {
         'spring','java','python','web','大数据'
       ]
     }
+  },
+  methods: {
+    loadBlogs(tag) {
+      this.$router.push({
+        path: '/index/blogList',
+        query: {
+          tag: tag
+        }
+      })
+    }
   }
 }
 </script>
@@ -40,6 +51,7 @@ export default {
   div.card-content {
     display: flex;
     flex-wrap: wrap;
+
   }
 
   div.tags {

@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <el-container>
-      <el-aside width="72%">
+      <el-aside width="72%" style="padding: 5px">
         <router-view/>
       </el-aside>
       <el-main>
@@ -31,9 +31,15 @@ import Footer from '../common/Footer'
 import AboutMe from '../common/AboutMe'
 import NewestBlog from '../common/NewestBlog'
 import SearchTags from '../common/SearchTags'
+import BlogView from '../blogs/BlogView'
 export default {
   name: 'Home',
-  components: {SearchTags, NewestBlog, AboutMe, Footer, BlogList, NavBar}
+  components: {BlogView, SearchTags, NewestBlog, AboutMe, Footer, BlogList, NavBar},
+  data() {
+    return {
+
+    }
+  },
 }
 </script>
 
