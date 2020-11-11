@@ -6,7 +6,7 @@
     >
       <div class="my-info">
         <span>
-          <img src="../../assets/images/avator.png" style="width: 70px;margin-bottom: 10px;"/>
+          <img src="../../assets/images/avator.png" @click="login" style="width: 70px;margin-bottom: 10px;"/>
         </span>
         <span>邱俊滔   <i class="el-icon-location"></i>北京</span>
         <el-divider></el-divider>
@@ -29,7 +29,12 @@
 
 <script>
 export default {
-  name: 'AboutMe'
+  name: 'AboutMe',
+  methods: {
+    login() {
+      this.$router.push('/login');
+    }
+  }
 }
 </script>
 

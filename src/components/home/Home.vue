@@ -1,8 +1,9 @@
 <template>
   <div id="home">
+    <nav-bar @handleSearch="handleSearch"></nav-bar>
     <el-container>
-      <el-aside width="72%" style="padding: 5px">
-        <router-view/>
+      <el-aside width="72%" style="padding: 5px;margin-bottom: 10px">
+        <router-view :searchVal="searchVal" @handleBlogSelected="viewBlog"/>
       </el-aside>
       <el-main>
         <el-row>
@@ -10,17 +11,17 @@
         </el-row>
         <el-row>
           <div class="newestArticle">
-            <NewestBlog></NewestBlog>
+            <NewestBlog @handleTitleSelected="getByTitle" ref="newestBlog"></NewestBlog>
           </div>
         </el-row>
         <el-row>
           <div class="tags">
-            <search-tags></search-tags>
+            <search-tags @handleSearchTag="listByTag" ref="searchTags"></search-tags>
           </div>
         </el-row>
       </el-main>
     </el-container>
-    <footer></footer>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -37,9 +38,48 @@ export default {
   components: {BlogView, SearchTags, NewestBlog, AboutMe, Footer, BlogList, NavBar},
   data() {
     return {
-
+      searchVal:'',
+      selectedBlog: ''
     }
   },
+  methods: {
+    getByTitle (val) {
+      const id = val.id;
+      this.$router.push({
+        path: '/index/blogView',
+        query: {
+          id: id
+        }
+      })
+    },
+    listByTag (val) {
+      console.log('listByTag:' + val)
+      this.$router.push({
+        path: '/index/blogsOfTag',
+        query: {
+          tag: val
+        }
+      })
+    },
+    viewBlog (val) {
+      console.log('跳转到Home viewBlog,val=' + val)
+      //this.selectedBlog = val
+      this.$router.push({
+        path: '/index/blogView',
+        query: {
+          id: val.id
+        }
+      })
+    },
+    handleSearch(val) {
+      this.$router.push({
+        path: '/index/blogsOfKey',
+        query: {
+          keywords: val
+        }
+      })
+    }
+  }
 }
 </script>
 

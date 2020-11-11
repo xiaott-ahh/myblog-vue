@@ -101,17 +101,17 @@ export default {
       const _this = this
       this.$axios.get('/blogs').then(resp => {
         if (resp && resp.data) {
-          _this.articles = resp.data
-          //_this.total = resp.data.
+          //_this.articles = resp.data
+          _this.total = resp.data.length;
+          _this.articles = resp.data.slice(0,10)
         }
       })
     },
     handleCurrentChange (page) {
       var _this = this
-      this.$axios.get('/article/' + this.pageSize + '/' + page).then(resp => {
+      this.$axios.get('/blogs/' + this.pageSize*page).then(resp => {
         if (resp && resp.status === 200) {
-          _this.articles = resp.data.content
-          _this.total = resp.data.totalElements
+          _this.articles = resp.data
         }
       })
     },

@@ -36,12 +36,14 @@ export default {
   },
   methods: {
     loadBlogs(tag) {
+      /*
       this.$router.push({
         path: '/index/blogList',
         query: {
           tag: tag
         }
-      })
+      })*/
+      this.$emit('handleSearchTag',tag)
     }
   }
 }

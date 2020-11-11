@@ -1,5 +1,5 @@
 <template>
-  <div id="blog-list">
+  <div id="blog-list" ref="blogsOfTag">
     <el-card
       shadow="always"
       v-for="(blog,i) in blogs"
@@ -25,8 +25,8 @@
           <div class="otherInfo">
             <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
-            <!--
             <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
+            <!--
             <span><i class="el-icon-s-comment"></i>2000</span>
             <span style=""><img src="../../assets/icos/fullheart.png">2</span>
             -->
@@ -39,14 +39,47 @@
 
 <script>
 export default {
-  name: 'BlogList',
+  name: 'BlogsOfTag',
   data () {
     return {
+      tag: '',
       blogs: []
     }
   },
   mounted () {
-    this.loadBlogs()
+    this.loadBlogs();
+  },
+
+  methods: {
+    loadBlogs() {
+      this.tag = this.$route.query.tag;
+      const url = 'tag/blogs/?tag=' + this.tag;
+      this.$axios.get(url).then(resp => {
+        if (resp && resp.status === 200) {
+          this.blogs = resp.data;
+        }
+      }).catch(() => {
+        this.$message.error('请求失败')
+      })
+    },
+    openBlog(blog) {
+      console.log('blogList:' + blog)
+      this.$emit('handleBlogSelected',blog)
+    }
+  },
+  watch: {
+    $route() {
+      this.$router.go(0)
+    }
+  }
+  /*
+  props: ['searchVal'],
+  watch: {
+    searchVal: function (val){
+      console.log('跳到blogList了,val='+val);
+      this.blogs = val;
+      console.log('blogs.length:' + this.blogs.length)
+    },
   },
   methods: {
     loadBlogs () {
@@ -59,69 +92,63 @@ export default {
       })
     },
     openBlog(blog) {
-      /*
-      this.$router.push({
-        path:'/index/blogView',
-        query: {
-          id: blog.id
-        }
-      })*/
+
       console.log('blogList:' + blog)
       this.$emit('handleBlogSelected',blog)
     }
-  }
+  }*/
 }
 </script>
 
 <style scoped>
-  #blog-list {
-    width: 95%;
-    margin: 15px 0 0 15px;
-  }
+#blog-list {
+  width: 95%;
+  margin: 15px 0 0 15px;
+}
 
-  .el-card {
-    margin: 10px;
+.el-card {
+  margin: 10px;
 
-  }
-  /deep/ .el-card__body {
-    padding: 10px !important;
-  }
+}
+/deep/ .el-card__body {
+  padding: 10px !important;
+}
 
-  div.article {
-    display: flex;
-  }
+div.article {
+  display: flex;
+}
 
-  div.article-info {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 20px;
-  }
+div.article-info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 20px;
+}
 
-  div.article-info p {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    text-align: left;
-  }
+div.article-info p {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
 
-  div.article-cover img{
-    margin-top: 5px;
-    margin-left: 10px;
-    width: 230px;
-    height: 135px;
-  }
+div.article-cover img{
+  margin-top: 5px;
+  margin-left: 10px;
+  width: 230px;
+  height: 135px;
+}
 
-  div.article-cover img:hover{
-    transform: scale(1.1);
-  }
-  div.article-tags {
-    text-align: left;
-  }
+div.article-cover img:hover{
+  transform: scale(1.1);
+}
+div.article-tags {
+  text-align: left;
+}
 
-  div.otherInfo {
-    margin-top: 10px;
-    text-align: left;
-  }
-  div.otherInfo span {
-    margin-right: 45px;
-  }
+div.otherInfo {
+  margin-top: 10px;
+  text-align: left;
+}
+div.otherInfo span {
+  margin-right: 45px;
+}
 </style>

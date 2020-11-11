@@ -1,5 +1,9 @@
 <template>
-  <div id="blog-list">
+  <div id="blog-list" ref="blogsOfTag">
+    <el-card shadow="always" style="height: 55px" class="searchTitle">
+      <div v-if="blogs.length"><span>搜索 {{keywords}} 的结果</span></div>
+      <div v-else><span>暂无相关信息</span></div>
+    </el-card>
     <el-card
       shadow="always"
       v-for="(blog,i) in blogs"
@@ -25,8 +29,8 @@
           <div class="otherInfo">
             <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
-            <!--
             <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
+            <!--
             <span><i class="el-icon-s-comment"></i>2000</span>
             <span style=""><img src="../../assets/icos/fullheart.png">2</span>
             -->
@@ -39,35 +43,37 @@
 
 <script>
 export default {
-  name: 'BlogList',
+  name: 'BlogsOfSearch',
   data () {
     return {
+      keywords: '',
       blogs: []
     }
   },
   mounted () {
-    this.loadBlogs()
+    this.loadBlogs();
   },
+
   methods: {
-    loadBlogs () {
-      this.$axios.get('/blogs').then(resp => {
-        if (resp && resp.data) {
+    loadBlogs() {
+      this.keywords = this.$route.query.keywords;
+      const url = 'keywords/blogs/?keywords=' + this.keywords;
+      this.$axios.get(url).then(resp => {
+        if (resp && resp.status === 200) {
           this.blogs = resp.data;
         }
-      }).catch(failresp => {
-        this.$message('请求失败，请稍后重试');
+      }).catch(() => {
+        this.$message.error('请求失败')
       })
     },
     openBlog(blog) {
-      /*
-      this.$router.push({
-        path:'/index/blogView',
-        query: {
-          id: blog.id
-        }
-      })*/
       console.log('blogList:' + blog)
       this.$emit('handleBlogSelected',blog)
+    }
+  },
+  watch: {
+    $route() {
+      this.$router.go(0)
     }
   }
 }
@@ -78,7 +84,14 @@ export default {
     width: 95%;
     margin: 15px 0 0 15px;
   }
-
+  .searchTitle div {
+    display: flex;
+  }
+  .searchTitle span{
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 10px;
+  }
   .el-card {
     margin: 10px;
 

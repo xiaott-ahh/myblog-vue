@@ -9,12 +9,16 @@
           <img src="../../assets/icos/hot.png" style="vertical-align: middle"/>
           最新文章
         </span>
-        <el-link
-          v-for="(article,i) in articles"
-          :key="i"
-          style="margin-top: 10px;"
-          @click="openBlog(article)"
-        >{{article.title}}</el-link>
+        <div class="link-container"
+             v-for="(article,i) in articles"
+             :key="i"
+             style="width: 100%;text-align: left"
+        >
+          <el-link
+            style="margin-top: 10px;"
+            @click="openBlog(article)"
+          >{{article.title}}</el-link>
+        </div>
       </div>
     </el-card>
   </div>
@@ -40,12 +44,7 @@ export default {
       })
     },
     openBlog(article) {
-      this.$router.push({
-        path:'/index/blogView',
-        query: {
-          id: article.id
-        }
-      })
+      this.$emit('handleTitleSelected',article)
     }
   }
 }

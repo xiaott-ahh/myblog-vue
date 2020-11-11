@@ -45,12 +45,7 @@ export default {
 
     },
     searchClick(keywords) {
-      this.$router.push({
-        path: '/index/blogList',
-        query: {
-          keywords: keywords
-        }
-      })
+      this.$emit('handleSearch',keywords)
     }
   }
 }

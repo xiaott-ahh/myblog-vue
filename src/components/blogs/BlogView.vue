@@ -11,7 +11,9 @@
             <img src="../../assets/icos/origin.png" style="margin-right: 40px">
             <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
+            <!--
             <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
+            -->
           </div>
           <div class="article-tags">
             <span>标签：</span>
@@ -41,6 +43,7 @@ export default {
       blog:{}
     }
   },
+  props: ['selectedBlog'],
   created () {
     const id = this.$route.query.id;
     const url = '/getblog/' + id;
@@ -52,7 +55,7 @@ export default {
           console.log('浏览量:' + this.blog.visitedNum);
           /*
           更新浏览量
-           */
+
           this.$axios.post('/blogs',{
             id: this.blog.id,
             title: this.blog.title,
@@ -63,7 +66,7 @@ export default {
             createdAt: this.blog.createdAt,
             tags: this.blog.tags,
             visitedNum: this.blog.visitedNum
-          })
+          })*/
         }
       }
     ).catch(failResponse=>{
@@ -71,9 +74,15 @@ export default {
     });
   },
   watch:{
+
     $route() {
       this.$router.go(0)
-    }
+    },
+    /*
+    selectedBlog: function (val) {
+      console.log('跳转到blogView,val=' + val);
+      this.blog = val;
+    }*/
   },
 }
 </script>

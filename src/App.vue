@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <nav-bar v-if="!$route.meta.notVisible"></nav-bar>
     <router-view/>
-
   </div>
 </template>
 

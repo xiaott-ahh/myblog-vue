@@ -7,6 +7,9 @@ import BlogView from '../components/blogs/BlogView'
 import BlogManagement from '../components/admin/content/BlogManagement'
 import ArticleEditor from '../components/admin/content/ArticleEditor'
 import ErrorPage from '../components/common/ErrorPage'
+import BlogsOfTag from '../components/blogs/BlogsOfTag'
+import BlogsOfSearch from '../components/blogs/BlogsOfSearch'
+import Login from '../components/common/Login'
 Vue.use(Router)
 
 export default new Router({
@@ -31,8 +34,23 @@ export default new Router({
           path: 'blogView',
           name: 'BlogView',
           component: BlogView
+        },
+        {
+          path: 'blogsOfTag',
+          name: 'BlogsOfTag',
+          component: BlogsOfTag
+        },
+        {
+          path: 'blogsOfKey',
+          name: 'BlogsOfSearch',
+          component: BlogsOfSearch
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/admin/xiaoTT',
