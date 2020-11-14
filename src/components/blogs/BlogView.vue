@@ -11,9 +11,9 @@
             <img src="../../assets/icos/origin.png" style="margin-right: 40px">
             <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
-            <!--
+
             <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
-            -->
+
           </div>
           <div class="article-tags">
             <span>标签：</span>
@@ -51,7 +51,7 @@ export default {
       resp => {
         if(resp && resp.data) {
           this.blog = resp.data;
-          this.blog.visitedNum += 1;
+          //this.blog.visitedNum += 1;
           console.log('浏览量:' + this.blog.visitedNum);
           /*
           更新浏览量

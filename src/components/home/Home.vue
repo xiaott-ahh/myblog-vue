@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <nav-bar @handleSearch="handleSearch"></nav-bar>
+    <nav-bar @handleSearch="handleSearch" @handleTagSelected="listByTag"></nav-bar>
     <el-container>
       <el-aside width="72%" style="padding: 5px;margin-bottom: 10px">
         <router-view :searchVal="searchVal" @handleBlogSelected="viewBlog"/>

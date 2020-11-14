@@ -2,7 +2,7 @@
   <el-upload
     class="img-upload"
     ref="upload"
-    action="http://localhost:8088/api/admin/blog/images"
+    action="http://8.131.110.169:8088/api/admin/blog/images"
     :on-preview="handlePreview"
     :on-remove="handleRemove"
     :before-remove="beforeRemove"

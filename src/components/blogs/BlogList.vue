@@ -25,8 +25,8 @@
           <div class="otherInfo">
             <span><i class="el-icon-time"></i>{{blog.createdAt}}</span>
             <span><i class="el-icon-s-custom"></i>xiaott</span>
-            <!--
             <span><i class="el-icon-view"></i>{{blog.visitedNum}}</span>
+            <!--
             <span><i class="el-icon-s-comment"></i>2000</span>
             <span style=""><img src="../../assets/icos/fullheart.png">2</span>
             -->
@@ -34,6 +34,14 @@
         </div>
       </div>
     </el-card>
+    <el-pagination
+      background
+      style="float:right;"
+      layout="total, prev, pager, next, jumper"
+      @current-change="handleCurrentChange"
+      :page-size="pageSize"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -42,7 +50,9 @@ export default {
   name: 'BlogList',
   data () {
     return {
-      blogs: []
+      pageSize:9,
+      total: '',
+      blogs: [],
     }
   },
   mounted () {
@@ -50,25 +60,35 @@ export default {
   },
   methods: {
     loadBlogs () {
-      this.$axios.get('/blogs').then(resp => {
-        if (resp && resp.data) {
-          this.blogs = resp.data;
+      const _this = this
+      this.$axios.get('/blogs/0').then(resp => {
+        if (resp && resp.status === 200) {
+          //_this.articles = resp.data
+          _this.blogs = resp.data;
+          this.$axios.get('/blogs/nums').then(resp => {
+            if (resp && resp.data) {
+              _this.total = resp.data;
+            }
+          })
         }
-      }).catch(failresp => {
-        this.$message('请求失败，请稍后重试');
+      }).catch(() => {
+        this.$message.error('请求失败请稍后重试')
       })
     },
     openBlog(blog) {
-      /*
-      this.$router.push({
-        path:'/index/blogView',
-        query: {
-          id: blog.id
-        }
-      })*/
       console.log('blogList:' + blog)
       this.$emit('handleBlogSelected',blog)
-    }
+    },
+    handleCurrentChange (page) {
+      var _this = this
+      this.$axios.get('/blogs/' + this.pageSize*(page-1)).then(resp => {
+        if (resp && resp.status === 200) {
+          _this.blogs = resp.data
+        }
+      }).catch(() => {
+        this.$message.error('请求失败请稍后重试')
+      })
+    },
   }
 }
 </script>
@@ -81,7 +101,6 @@ export default {
 
   .el-card {
     margin: 10px;
-
   }
   /deep/ .el-card__body {
     padding: 10px !important;
@@ -124,4 +143,5 @@ export default {
   div.otherInfo span {
     margin-right: 45px;
   }
+
 </style>

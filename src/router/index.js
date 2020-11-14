@@ -10,6 +10,8 @@ import ErrorPage from '../components/common/ErrorPage'
 import BlogsOfTag from '../components/blogs/BlogsOfTag'
 import BlogsOfSearch from '../components/blogs/BlogsOfSearch'
 import Login from '../components/common/Login'
+import TimeLine from '../components/common/TimeLine'
+
 Vue.use(Router)
 
 export default new Router({
@@ -23,44 +25,49 @@ export default new Router({
       path: '/index',
       redirect: '/index/blogList',
       name: 'Home',
-      component: Home,
+      component: () => import('../components/home/Home'),
       children: [
         {
           path: 'blogList',
           name: 'BlogList',
-          component: BlogList
+          component: () => import('../components/blogs/BlogList')
         },
         {
           path: 'blogView',
           name: 'BlogView',
-          component: BlogView
+          component: () => import('../components/blogs/BlogView')
         },
         {
           path: 'blogsOfTag',
           name: 'BlogsOfTag',
-          component: BlogsOfTag
+          component: () => import('../components/blogs/BlogsOfTag')
         },
         {
           path: 'blogsOfKey',
           name: 'BlogsOfSearch',
-          component: BlogsOfSearch
+          component: () => import('../components/blogs/BlogsOfSearch')
+        },
+        {
+          path: 'timeLine',
+          name: 'TimeLine',
+          component: () => import('../components/common/TimeLine')
         }
       ]
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: () => import('../components/common/Login')
     },
     {
       path: '/admin/xiaoTT',
       name: 'AdminIndex',
-      component: AdminIndex,
+      component: () => import('../components/admin/AdminIndex'),
       children: [
         {
           path: 'blogManagement',
           name: 'BlogManagement',
-          component: BlogManagement,
+          component: () => import('../components/admin/content/BlogManagement'),
           meta: {
             notVisible: true
           }
@@ -73,12 +80,12 @@ export default new Router({
     {
       path: '/admin/editor',
       name: 'Editor',
-      component: ArticleEditor
+      component: () => import('../components/admin/content/ArticleEditor')
     },
     {
       path: '/404',
       name: 'ErrorPage',
-      component: ErrorPage,
+      component: () => import('../components/common/ErrorPage'),
     },
     {
       path: '*',

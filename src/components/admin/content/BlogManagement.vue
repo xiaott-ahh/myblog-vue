@@ -84,7 +84,7 @@ export default {
   data () {
     return {
       articles: [],
-      pageSize: 10,
+      pageSize: 9,
       total: ''
     }
   },
@@ -109,7 +109,7 @@ export default {
     },
     handleCurrentChange (page) {
       var _this = this
-      this.$axios.get('/blogs/' + this.pageSize*page).then(resp => {
+      this.$axios.get('/blogs/' + this.pageSize*(page-1)).then(resp => {
         if (resp && resp.status === 200) {
           _this.articles = resp.data
         }

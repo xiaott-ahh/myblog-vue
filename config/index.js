@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/api": {
-        target: "https://localhost:8088",// 要访问的接口域名
+        //target: "http://localhost:8088",
+        target: "http://8.131.110.169:8088",// 要访问的接口域名
         ws: true,// 是否启用websockets
         changeOrigin: true, //开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题
         pathRewrite: {
@@ -22,8 +23,10 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    //host: 'localhost', // can be overwritten by process.env.HOST
+    host: '8.131.110.169',
+    //host: 'localhost',
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -73,7 +76,7 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false,
+    productionGzip: true,
     productionGzipExtensions: ['js', 'css'],
 
     // Run the build command with an extra argument to

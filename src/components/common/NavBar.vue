@@ -1,7 +1,7 @@
 <template>
   <div class="nav-header">
     <div class="nav-logo" style="display: flex;padding-left: 30px">
-      <a class="logo" href="/">
+      <a class="logo" href="/index">
         <img src="../../assets/images/logo.png" alt=""/>
       </a>
     </div>
@@ -17,6 +17,17 @@
       <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick(keywords)">搜索</el-button>
     </div>
     <div class="nav-right">
+      <el-dropdown
+        @command="handleCommand"
+      >
+        <span class="el-dropdown-link">分类</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="Spring">Spring</el-dropdown-item>
+          <el-dropdown-item command="Java">Java</el-dropdown-item>
+          <el-dropdown-item command="Python">Python</el-dropdown-item>
+          <el-dropdown-item command="大数据">BigData</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <el-menu
         theme="dark"
         mode="horizontal"
@@ -25,8 +36,7 @@
         background-color="black"
         text-color=white
         active-text-color=white>
-        <el-menu-item index="/tags">分类</el-menu-item>
-        <el-menu-item index="/date">归档</el-menu-item>
+        <el-menu-item index="/index/timeLine">归档</el-menu-item>
       </el-menu>
     </div>
   </div>
@@ -46,6 +56,9 @@ export default {
     },
     searchClick(keywords) {
       this.$emit('handleSearch',keywords)
+    },
+    handleCommand(command) {
+      this.$emit('handleTagSelected',command)
     }
   }
 }
@@ -66,6 +79,8 @@ export default {
 
   .nav-right {
     width: 15%;
+    display: flex;
+    align-items: center;
   }
 
   .el-menu {
@@ -76,6 +91,14 @@ export default {
   .el-menu-item {
     border-bottom: none !important;
     background-color: transparent !important;
+  }
+
+  .el-dropdown-link {
+    color:white;
+    font-size: 14px;
+    padding-right: 20px;
+    padding-left: 20px;
+    cursor: pointer;
   }
 
 </style>

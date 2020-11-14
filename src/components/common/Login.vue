@@ -3,6 +3,9 @@
     <el-form :model="loginForm" label-position="left" class="login"
              @keyup.enter.native="login"
     >
+      <el-form-item>
+        <h1>请先登录</h1>
+      </el-form-item>
       <el-form-item label="用户名">
         <el-input size="small" type="text" v-model="loginForm.username" autocomplete="off"></el-input>
       </el-form-item>
@@ -65,10 +68,16 @@ export default {
 .login {
   margin:100px auto;
   width:300px;
+  height: 350px;
   padding: 10px 20px 0px 20px;
   background: rgba(2, 10, 14, 0.5);
 }
 
+h1 {
+  margin: 10px 0 0 0;
+  color: white;
+  font-size: 25px;
+}
 /deep/ .el-form-item__label {
   color: white;
 }
@@ -79,6 +88,12 @@ export default {
 
 a.login-way {
   padding: 23px;
+}
+
+/deep/ .el-input__inner {
+  border-radius: 20px !important;
+  background-color: transparent !important;
+  color: white !important;
 }
 
 </style>

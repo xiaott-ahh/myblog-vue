@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <p>小滔滔的博客©Copyright 2020</p>
-    <p>Powered by  <el-link href="https://github.com/xiaott-ahh/myblog-server" target="_blank"> myBlog</el-link> & 阿里云</p>
+    <p>Powered by  <el-link :underline="false" href="https://github.com/xiaott-ahh/myblog-server" target="_blank"> myBlog</el-link> & 阿里云</p>
   </div>
 </template>
 

@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       tags: [
-        'spring','java','python','web','大数据'
+        'spring','java','python','web','大数据','其他'
       ]
     }
   },
