@@ -11,6 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      /*
       "/api": {
         //target: "http://localhost:8088",
         target: "http://8.131.110.169:8088",// 要访问的接口域名
@@ -19,14 +20,15 @@ module.exports = {
         pathRewrite: {
           '^/api': '' //这里理解成用'/api'代替target里面的地址,比如我要调用'http://40.00.100.100:3002/user/add'，直接写'/api/user/add'即可
         }
-      }
+      }*/
     },
 
     // Various Dev Server settings
     //host: 'localhost', // can be overwritten by process.env.HOST
     host: '8.131.110.169',
+    port: 80,
     //host: 'localhost',
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    //port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

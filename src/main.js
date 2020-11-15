@@ -10,7 +10,7 @@ import mavonEditor from 'mavor-editor'
 import 'mavon-editor/dist/css/index.css'
 
 const axios = require('axios')
-axios.defaults.baseURL = 'http://8.131.110.169:8088/api'
+axios.defaults.baseURL = 'http://8.131.110.169/api'
 //axios.defaults.baseURL = 'http://localhost:8088/api'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
